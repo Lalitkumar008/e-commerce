@@ -11,7 +11,7 @@ getSingleProductById(onSuccess,onFailure,productId)
   const onFailure=(e)=>{console.log(e)}
   console.log(productId)
     return (
-  <p>hello</p>
+  <p className='text-4xl'>single product page</p>
   )
 }
 

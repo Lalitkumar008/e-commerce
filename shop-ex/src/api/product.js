@@ -7,7 +7,7 @@ const userId = localStorage.getItem("userId");
 export const addToCartProduct = (onSuccess, onFailure, id) => {
   console.log(userId);
   axios
-    .post("https://e-com-backend-feal.onrender.com/addtocart", {
+    .post("https://e-com-backend-feal.onrender.com/products/addtocart", {
       headers: "6703f5c567b2709e5d0b900a",
       params: id,
     })
