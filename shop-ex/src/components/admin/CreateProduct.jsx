@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { createProduct } from '../../api/product'
+import { toast } from 'react-toastify'
+import Loader from '../Loader'
 
 const CreateProducts = () => {
 const [productDetail,setProductDetail]=useState({
@@ -10,6 +12,7 @@ const [productDetail,setProductDetail]=useState({
   // productImage:""
 })
 const [productImage,setProductImage]=useState(null)
+const [isLoading,setIsLoading]=useState(false)
 console.log(productDetail)
 
 const handleInputChange=(e)=>{
@@ -20,18 +23,13 @@ const handleInputChange=(e)=>{
   const handleFileChange = (e) => {
     setProductImage(e.target.files[0]); // Store file separately
   };
-  // const handleSubmit=(e)=>{
-  //   e.preventDefault()
-  //   console.log(e)
-  //     // Create a new FormData object
-  //   const formData={...productDetail,productImage}
-  //   console.log(formData)
-  //   createProduct(onSuccess,onFailure,formData)
-
-  // }
   const handleSubmit = (e) => {
+    setIsLoading(true)
   e.preventDefault();
-
+if(!productDetail.productName || !productDetail.productPrice || !productDetail.productDescription|| !productDetail.stockLevel)
+{
+  toast.error("please fill form properly")
+}
   // Create a FormData object to handle file and other product data
   const formData = new FormData();
 
@@ -58,23 +56,32 @@ console.log(formData.entries())
 };
 
   console.log(productImage)
-  const onSuccess=(e)=>{console.log(e)}
+  const onSuccess=(e)=>{console.log(e)
+    setProductDetail({
+      productName:"",
+      productPrice:"",
+      stockLevel:"",
+      productDescription:""
+    })
+toast.success(e.data.msg)
+setIsLoading(false)
+  }
   const onFailure=(e)=>{console.log(e)}
-  return (
+  return isLoading?
+  <Loader />
+  : (
     <div className='w-full bg-white h-[calc(100%-64px)] flex justify-center'>
      <div className='w-3/4 ' >
-<div>
-  <p className=''>create your product</p>
-  <p className=''>- Create and manage product listings with images, descriptions, pricing, and stock levels.</p>
+<div className='p-4'>
+  <p className='capitalize text-2xl text-center'>create your product</p>
 </div>
 
-<div>
-   <form action="#" onSubmit={handleSubmit} className="mt-4 p-2 capitalize" encType="multipart/form-data"
+<div className='flex justify-center '>
+   <form action="#" onSubmit={handleSubmit} className="space-y-6  mt-4 p-6 capitalize
+shadow-md
+   " encType="multipart/form-data"
     >
-        <input type="file" name="productImage"
-        // value={productDetail.productImage}
-        onChange={handleFileChange}
-        />
+     
         <div className="">
           <input 
           className="border-b-[1px] border-gray-300 block outline-none text-black text-sm w-80 mb-4 m-1 rounded p-1 gap-2" 
@@ -111,8 +118,13 @@ console.log(formData.entries())
         placeholder="Product Description" 
         onChange={handleInputChange}
         />
-
-        <input type="submit" className="w-40 bg-blue-400 p-1 m-1 rounded text-white font-semibold" value="create new product" />
+   <input type="file" name="productImage"
+        // value={productDetail.productImage}
+        onChange={handleFileChange}
+        />
+    <div className='flex justify-center'>
+          <input type="submit" className="w-40  bg-blue-400 p-1 m-1 rounded text-white font-semibold" value="create new product" />
+    </div>
     </form>
 </div>
      </div>
