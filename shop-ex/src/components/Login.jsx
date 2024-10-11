@@ -7,8 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const navigate=useNavigate();
-  const {userInfo,setUserInfo}=useContext(authContext)
-  // console.log(isLoggedIn())
+  const {storeTokenInLS,storeUserIdInLS,userId}=useContext(authContext)
   const [userData,setUserData]=useState({
     email:"",
     password:""
@@ -21,17 +20,13 @@ loginUser(onSuccess,onFailure,userData)
   const onSuccess=(e)=>{
     console.log("sucesss>>>>>",e)
     toast.success(e?.data?.msg)
-    setUserInfo({
-      email:e.data.msg2.email,
-      token:e.data.token,
-      userId:e.data.userId,
-      username:e.data.username
-    })
-    localStorage.setItem("userId",e.data.userId)
-    localStorage.setItem("token",e.data.token)
+    storeTokenInLS(e.data.token)
+    storeUserIdInLS(e.data.userId)
+    // localStorage.setItem("token", e.data.token);
+    // localStorage.setItem("userId",e.data.userId );
     navigate('/')
   }
-  console.log(userInfo)
+  console.log(userData)
   const onFailure=(e)=>{
     console.log(e)
     const msg= e.response.data.msg
@@ -55,12 +50,12 @@ setUserData({...userData,[name]:value})
 
     <div className="my-4 space-y-2">
       <p className="font-semibold tracking-wide text-black">Email</p>
-      <input type="email" placeholder="email" className="text-black font-extralight p-2 !w-72 rounded outline-none border-b-2 border-b-black" name="email" value={userData.email}
+      <input type="email" placeholder="email" className="text-black font-extralight p-2 !w-72 rounded outline-none border-b-[1px] border-b-black" name="email" value={userData.email}
       onChange={handleInputChange} />
     </div>
   <div className="my-4 space-y-2">
     <p className="font-semibold tracking-wide text-black">Password</p>
-    <input onChange={handleInputChange} type="password" placeholder="password" className="text-black font-extralight p-2 !w-72 rounded outline-none border-b-2 border-b-black" name="password" value={userData.password} />
+    <input onChange={handleInputChange} type="password" placeholder="password" className="text-black font-extralight p-2 !w-72 rounded outline-none border-b-[1px] border-b-black" name="password" value={userData.password} />
   </div>
   <div className="flex justify-center mt-2">
     <button  className="p-2 text-white bg-blue-400 m-2 w-20 flex justify-center rounded">Sign In</button>

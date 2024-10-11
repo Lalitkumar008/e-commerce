@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Home from './components/Home'
 import Navbar from './components/Navbar'
@@ -12,6 +12,7 @@ import RouteError from './components/RouteError'
 import Profile from './components/Profile'
 import SingleProduct from './components/SingleProduct'
 import Cart from './components/Cart'
+import Logout from './components/Logout'
 function App() {
   return (
     <div className='w-100vw h-[100vh] bg-white '>
@@ -25,6 +26,7 @@ function App() {
         <Route path='/admin/createproduct' element={<CreateProduct />} />
         <Route path='/admin/allproducts' element={<AllProducts />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/logout' element={<Logout />} />
         <Route path='/product/:productId' element={<SingleProduct />} />
         <Route path='/mycart' element={<Cart />} />
 

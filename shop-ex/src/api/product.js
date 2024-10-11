@@ -2,13 +2,15 @@ import axios from "axios";
 import { useContext } from "react";
 import { authContext } from "../context/authContext";
 const userId = localStorage.getItem("userId");
-
+const token = localStorage.getItem("token");
+const baseUrl = "http://localhost:3000";
+// const baseUrl = "https://e-com-backend-feal.onrender.com";
 // add to cart product
 export const addToCartProduct = (onSuccess, onFailure, id) => {
   console.log(userId);
   axios
-    .post("https://e-com-backend-feal.onrender.com/products/addtocart", {
-      headers: "6703f5c567b2709e5d0b900a",
+    .post(`${baseUrl}/products/addtocart`, {
+      headers: userId,
       params: id,
     })
     .then((response) => {
@@ -22,9 +24,12 @@ export const addToCartProduct = (onSuccess, onFailure, id) => {
 export const getCartItems = (onSuccess, onFailure) => {
   console.log(userId);
   axios
-    .get("https://e-com-backend-feal.onrender.com/products/mycart", {
+    .get(`${baseUrl}/products/mycart`, {
       headers: {
-        userId: "6703f5c567b2709e5d0b900a",
+        Authorization: token,
+      },
+      params: {
+        userId: userId,
       },
     })
     .then((response) => {
@@ -35,10 +40,11 @@ export const getCartItems = (onSuccess, onFailure) => {
     });
 };
 
+// create product
 export const createProduct = (onSuccess, onFailure, values) => {
   axios
     .post(
-      "https://e-com-backend-feal.onrender.com//products/create",
+      `${baseUrl}/products/create`,
       { ...values },
       {
         headers: {
@@ -55,7 +61,7 @@ export const createProduct = (onSuccess, onFailure, values) => {
 };
 export const getAllProducts = (onSuccess, onFailure) => {
   axios
-    .get("https://e-com-backend-feal.onrender.com/products/allproducts")
+    .get(`${baseUrl}/products/allproducts`)
     .then((response) => {
       onSuccess(response);
     })
@@ -66,10 +72,7 @@ export const getAllProducts = (onSuccess, onFailure) => {
 // single product
 export const getSingleProductById = (onSuccess, onFailure, id) => {
   axios
-    .get("https://e-com-backend-feal.onrender.com/products/singleProduct", {
-      headers: userId,
-      params: id,
-    })
+    .get(`${baseUrl}/products/singleProduct/${id}`, {})
     .then((response) => {
       onSuccess(response);
     })
@@ -78,12 +81,10 @@ export const getSingleProductById = (onSuccess, onFailure, id) => {
     });
 };
 
+// delete product
 export const deleteProductById = (onSuccess, onFailure, productId) => {
   axios
-    .post(
-      "https://e-com-backend-feal.onrender.com/products/deleteproduct",
-      productId
-    )
+    .post(`${baseUrl}/products/deleteproduct/${productId}`, {})
     .then((response) => {
       onSuccess(response);
     })

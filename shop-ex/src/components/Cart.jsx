@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getCartItems } from '../api/product'
 import Loader from './Loader'
-
+import { loadStripe } from '@stripe/stripe-js'
 const Cart = () => {
     const [cartItems,setCartItems]=useState()
     const [totalAmount,setTotalAmount]=useState()
@@ -26,11 +26,33 @@ console.log(totalAmount)
     }
     console.log(cartItems)
     const onFailure=(e)=>{console.log(e)}
+    // payment method
+    const handleMakePayment=async ()=>{
+const stripe=await loadStripe(import.meta.env.VITE_STRIPE_KEY)
+const body={
+  products:{...cartItems}
+}
+
+const headers={
+  "Content-Type":"application/json"
+}
+const baseUrl = "http://localhost:3000/products";
+// const baseUrl = "https://e-com-backend-feal.onrender.com/products/addtocart";
+const response =await fetch(`${baseUrl}/create-checkout-session`,{
+  method:"POST",
+  headers:headers,
+  body:JSON.stringify(body)
+})
+const session=await response.json()
+const result= stripe.redirectToCheckout({
+  sessionId:session
+})
+    }
   return isLoading?
   <Loader />
   : (
   <div>
-    <p className='text-center p-4 text-3xl'><span className='text-red-400'>({cartItems?.length})</span> items in your cart</p>
+    <p className='text-center p-4 text-3xl'><span className='text-red-400'>({cartItems?.length || 0})</span> items in your cart</p>
     <p className='text-center p-4 text-2xl'>Total Amount : <span className='text-red-400'>{totalAmount} ₹</span> </p>
       <div className='flex justify-center p-'>
      <div className='w-1/2   '>
@@ -52,7 +74,7 @@ console.log(totalAmount)
      
     </div>
     <div className='capitalize flex justify-center '>
-     <button onClick={()=>handleAddToCart(product._id)}  className="p-2 w-1/2 text-white bg-blue-400   flex justify-center rounded mb-4 hover:bg-blue-500">proceed to checkout</button>
+     <button onClick={handleMakePayment}  className="p-2 w-1/2 text-white bg-blue-400   flex justify-center rounded mb-4 hover:bg-blue-500">proceed to payment</button>
      </div>
   </div>
   )

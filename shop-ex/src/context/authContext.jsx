@@ -1,26 +1,37 @@
 import React, { useEffect, useState } from "react";
+import { getUserInfo } from "../api/auth";
+import { useFetcher, useNavigate } from "react-router-dom";
 
 const authContext = React.createContext();
 const AuthProvider = ({ children }) => {
   const [token,setToken]=useState()
-  const [userInfo,setUserInfo]=useState()
+  const [userId,setUserId]=useState()
+  const [userData,setUserData]=useState()
   
   useEffect(()=>{
-    localStorage.setItem("userId",userInfo?.userId)
-  },[userInfo])
-    const onFetchServiceSuccess=(e)=>{
-setServiceData(e.data)
+      console.log(token,userId)
+  },[userData])
+  useEffect(()=>{
+    getUserInfo(onFetchUserSuccess,onFetchUserFailure)
+  },[])
+    const onFetchUserSuccess=(e)=>{
+console.log(e)
+setUserData(e.data.userInfo)
+
   }
-  const onFetchServiceFailure=(e)=>{
+  const onFetchUserFailure=(e)=>{
+    console.log(e)
   }
-const onSuccess=(e)=>{console.log(e)
-setUserData(e.data.userData)
-}
-const onFailure=(e)=>{}
+
+
   const storeTokenInLS = (serverToken) => {
     console.log("fn called",serverToken)
     setToken(serverToken)
     return localStorage.setItem("token", serverToken);
+  };
+  const storeUserIdInLS = (userId) => {
+    setUserId(userId)
+    return localStorage.setItem("userId", userId);
   };
 
   
@@ -28,9 +39,8 @@ const onFailure=(e)=>{}
     if(localStorage.getItem("token"))
 return true
     else return false
-
   }
-  console.log(userInfo)
-  return <authContext.Provider value={{storeTokenInLS,isLoggedIn,token,setToken,userInfo,setUserInfo}}>{children}</authContext.Provider>;
+  console.log(userData)
+  return <authContext.Provider value={{storeTokenInLS,storeUserIdInLS,isLoggedIn,token,userId,setToken,userData,setUserData}}>{children}</authContext.Provider>;
 };
 export { authContext, AuthProvider };

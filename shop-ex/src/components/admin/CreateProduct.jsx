@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { createProduct } from '../../api/product'
 import { toast } from 'react-toastify'
 import Loader from '../Loader'
+import { Link } from 'react-router-dom'
 
 const CreateProducts = () => {
 const [productDetail,setProductDetail]=useState({
@@ -71,9 +72,11 @@ setIsLoading(false)
   <Loader />
   : (
     <div className='w-full bg-white h-[calc(100%-64px)] flex justify-center'>
+      
      <div className='w-3/4 ' >
 <div className='p-4'>
   <p className='capitalize text-2xl text-center'>create your product</p>
+  
 </div>
 
 <div className='flex justify-center '>
@@ -125,7 +128,11 @@ shadow-md
     <div className='flex justify-center'>
           <input type="submit" className="w-40  bg-blue-400 p-1 m-1 rounded text-white font-semibold" value="create new product" />
     </div>
+   <div className='flex justify-center '>
+     <Link to={"/admin/allproducts"} className='bg-gray-200 py-2 px-4 hover:bg-gray-300 rounded-md capitalize  text-center'>all listed products </Link>
+   </div>
     </form>
+    
 </div>
      </div>
     </div>

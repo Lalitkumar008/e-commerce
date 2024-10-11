@@ -4,10 +4,10 @@ import { useFetcher, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const Profile = () => {
-    const {userInfo}=useContext(authContext)
+    const {userData}=useContext(authContext)
     const navigate=useNavigate()
    useEffect(()=>{
- if(!userInfo){
+ if(!userData){
         toast("login first")
 navigate('/login')
     }
@@ -21,11 +21,11 @@ navigate('/login')
      <div className='space-y-3 p-4'>
            <div className='flex gap-x-4 '>
             <p className='font-semibold'>username : </p>
-            <p>{userInfo?.username}</p>
+            <p>{userData?.username}</p>
         </div>
         <div className='flex gap-x-4 '>
             <p className='font-semibold'>email : </p>
-            <p>{userInfo?.email}</p>
+            <p>{userData?.email}</p>
         </div>
      </div>
         </div>
