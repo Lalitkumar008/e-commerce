@@ -19,15 +19,24 @@ navigate('/login')
 
             </p>
      <div className='space-y-3 p-4'>
-           <div className='flex gap-x-4 '>
+           <div className='flex gap-x-4 bg-slate-200 shadow-md py-2 px-4 rounded'>
             <p className='font-semibold'>username : </p>
-            <p>{userData?.username}</p>
+            <p>{userData?.fullName}</p>
         </div>
-        <div className='flex gap-x-4 '>
+        <div className='flex gap-x-4 bg-slate-200 shadow-md py-2 px-4'>
             <p className='font-semibold'>email : </p>
             <p>{userData?.email}</p>
         </div>
+         <div className='flex gap-x-4 bg-slate-200 shadow-md py-2 px-4'>
+            <p className='font-semibold'>contact No : </p>
+            <p>{userData?.phone}</p>
+        </div>
+        <div className='flex gap-x-4 bg-slate-200 shadow-md py-2 px-4'>
+            <p className='font-semibold'>delivery address : </p>
+            <p>{userData?.deliveryAddress}</p>
+        </div>
      </div>
+    
         </div>
     </div>
   )

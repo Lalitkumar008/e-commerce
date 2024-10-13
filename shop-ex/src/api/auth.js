@@ -26,7 +26,13 @@ export const loginUser = (onSuccess, onFailure, values) => {
 
 export const createUser = (onSuccess, onFailure, values) => {
   axios
-    .post(`${baseUrl}/users/register`, { ...values })
+    .post(
+      `${baseUrl}/users/register`,
+      { ...values },
+      {
+        withCredentials: true,
+      }
+    )
     .then((response) => {
       onSuccess(response);
     })

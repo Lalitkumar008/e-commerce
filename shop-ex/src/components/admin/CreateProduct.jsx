@@ -9,8 +9,12 @@ const [productDetail,setProductDetail]=useState({
   productName:"",
   productPrice:"",
   stockLevel:"",
+  productCategory:"",
   productDescription:"",
-  // productImage:""
+  productMrp:"",
+    bgColor:"",
+      panelColor:"",
+      productColor:"",
 })
 const [productImage,setProductImage]=useState(null)
 const [isLoading,setIsLoading]=useState(false)
@@ -19,41 +23,24 @@ console.log(productDetail)
 const handleInputChange=(e)=>{
   const name =e.target.name
   const value=e.target.value
+  console.log(value)
   setProductDetail({...productDetail,[name]:value})
 }
   const handleFileChange = (e) => {
     setProductImage(e.target.files[0]); // Store file separately
   };
   const handleSubmit = (e) => {
-    setIsLoading(true)
+
   e.preventDefault();
 if(!productDetail.productName || !productDetail.productPrice || !productDetail.productDescription|| !productDetail.stockLevel)
 {
   toast.error("please fill form properly")
 }
-  // Create a FormData object to handle file and other product data
-  const formData = new FormData();
-
-  // Append each piece of product data to the form
-  formData.append('productName', productDetail.productName);
-  formData.append('productPrice', productDetail.productPrice);
-  formData.append('stockLevel', productDetail.stockLevel);
-  formData.append('productDescription', productDetail.productDescription);
-
-  // Append the product image separately
-  if (productImage) {
-    formData.append('productImage', productImage); // productImage is a File object
-  }
-console.log(formData.entries())
-  
-  // Send formData to the server
-  // createProduct(onSuccess, onFailure, formData);
+else{
+ 
   createProduct(onSuccess, onFailure, {...productDetail,productImage});
-    // Log FormData contents
-  for (let [key, value] of formData.entries()) {
-    console.log(key, value);
-  }
-
+       setIsLoading(true)
+}
 };
 
   console.log(productImage)
@@ -62,7 +49,12 @@ console.log(formData.entries())
       productName:"",
       productPrice:"",
       stockLevel:"",
-      productDescription:""
+      productDescription:"",
+      productColor:"",
+      panelColor:"",
+      bgColor:"",
+      productMrp:"",
+      productCategory:""
     })
 toast.success(e.data.msg)
 setIsLoading(false)
@@ -71,7 +63,7 @@ setIsLoading(false)
   return isLoading?
   <Loader />
   : (
-    <div className='w-full bg-white h-[calc(100%-64px)] flex justify-center'>
+    <div className='w-full bg-slate-100  overflow-auto flex justify-center'>
       
      <div className='w-3/4 ' >
 <div className='p-4'>
@@ -79,15 +71,15 @@ setIsLoading(false)
   
 </div>
 
-<div className='flex justify-center '>
-   <form action="#" onSubmit={handleSubmit} className="space-y-6  mt-4 p-6 capitalize
+<div className='flex justify-center mb-8'>
+   <form action="#" onSubmit={handleSubmit} className="bg-white rounded-md space-y-6  mt-4 p-6 capitalize
 shadow-md
    " encType="multipart/form-data"
     >
      
         <div className="">
           <input 
-          className="border-b-[1px] border-gray-300 block outline-none text-black text-sm w-80 mb-4 m-1 rounded p-1 gap-2" 
+          className="border-b-[1px] focus:border-b-2 border-gray-300 block outline-none text-black text-sm w-80 mb-4 m-1 rounded p-1 gap-2" 
           type="text" 
           name="productName" 
           value={productDetail.productName}
@@ -95,32 +87,79 @@ shadow-md
           placeholder="Product Name" />
 
           <input 
-          className="border-b-[1px] border-gray-300 block outline-none text-black text-sm w-80 mb-4 m-1 rounded p-1 gap-2" 
+          className="border-b-[1px] focus:border-b-2 border-gray-300 block outline-none text-black text-sm w-80 mb-4 m-1 rounded p-1 gap-2" 
           type="text" 
           name="productPrice"
           placeholder="Product Price" value={productDetail.productPrice}
           onChange={handleInputChange}
           />
+          <input 
+          className="border-b-[1px]
+           focus:border-b-2
+          border-gray-300 block outline-none text-black text-sm w-80 mb-4 m-1 rounded p-1 gap-2" 
+          type="text" 
+          name="productMrp"
+          placeholder="Prdocut MRP" value={productDetail.productMrp}
+          onChange={handleInputChange}
+          />
         </div>
 
         <input 
-        className="border-b-[1px] border-gray-300 block outline-none text-black text-sm w-80 m-1 rounded p-1 gap-2" 
+        className="border-b-[1px] focus:border-b-2 border-gray-300 block outline-none text-black text-sm w-80 m-1 rounded p-1 gap-2" 
         type="number" 
         name="stockLevel"        
         placeholder="Stock Level" 
         value={productDetail.stockLevel}
         onChange={handleInputChange}
         />
+       <select name='productCategory' value={productDetail.productCategory} onChange={handleInputChange} 
+       className='border-[1px] w-80 border-gray-300 outline-none px-2 py-[2px] rounded-md text-sm'
+       >
+         <option value="" disabled selected hidden>
+    Select a category
+  </option>
+        <option className=' ' value="clothing">Clothing</option>
+        <option className=' ' value="footware">Footeware</option>
+        <option className=' ' value="bags">Bags</option>
+        <option className=' ' value="clocks">Clocks</option>
+       </select>
 
         <textarea 
         rows={3}  
-        className="border-b-[1px] border-gray-300 block outline-none text-black text-sm w-80 m-1 rounded p-1 gap-2" 
+        className="border-[1px] focus:border-b-2 border-gray-300 block outline-none text-black text-sm w-80 m-1 rounded p-1 gap-2" 
         type="text" 
         name="productDescription"  
         value={productDetail.productDescription}      
         placeholder="Product Description" 
         onChange={handleInputChange}
         />
+          <input 
+          className="border-b-[1px]
+           focus:border-b-2
+          border-gray-300 block outline-none text-black text-sm w-80 mb-4 m-1 rounded p-1 gap-2" 
+          type="text" 
+          name="bgColor"
+          placeholder="Background color" value={productDetail.bgColor}
+          onChange={handleInputChange}
+          />
+            <input 
+          className="border-b-[1px]
+           focus:border-b-2
+          border-gray-300 block outline-none text-black text-sm w-80 mb-4 m-1 rounded p-1 gap-2" 
+          type="text" 
+          name="panelColor"
+          placeholder="Panel color" value={productDetail.panelColor}
+          onChange={handleInputChange}
+          />
+            <input 
+          className="border-b-[1px]
+           focus:border-b-2
+          border-gray-300 block outline-none text-black text-sm w-80 mb-4 m-1 rounded p-1 gap-2" 
+          type="text" 
+          name="productColor"
+          placeholder="Prodcut color" value={productDetail.productColor}
+          onChange={handleInputChange}
+          />
    <input type="file" name="productImage"
         // value={productDetail.productImage}
         onChange={handleFileChange}

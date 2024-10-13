@@ -9,36 +9,35 @@ const AllProducts = () => {
     const [searchValue,setsearchValue]=useState()
     const [isLoading,setIsLoading]=useState(false)
     useEffect(()=>{
-// getAllProducts(onFetchAllProductsSuccess,onFetchAllProductsFailure)
-// setIsLoading(true)
+getAllProducts(onFetchAllProductsSuccess,onFetchAllProductsFailure)
+setIsLoading(true)
     },[])
     const onFetchAllProductsSuccess=(e)=>{
-        console.log(e)
+        
         setAllProducts(e.data.data)
         setCopyAllProducts(e.data.data)
         toast.success(e.data.message)
         setIsLoading(false)
     }
-    const onFetchAllProductsFailure=(e)=>{console.log(e)}
-    console.log(allProducts)
+    const onFetchAllProductsFailure=(e)=>{}
+    
     const handleDeleteProduct=(id)=>{
       setIsLoading(true)
 deleteProductById(onDeleteProductSuccess,onDeleteProductFailure,id)
     }
-    const onDeleteProductSuccess=(e)=>{console.log(e)
+    const onDeleteProductSuccess=(e)=>{
 toast.success(e.data.message)
 setIsLoading(false)
     }
-    const onDeleteProductFailure=(e)=>{console.log(e)}
+    const onDeleteProductFailure=(e)=>{}
 
      // search function
   const handleSearchChange=(e)=>{
-    console.log("working",e.target.value)
+
 let query=e.target.value.toLowerCase();
 if(!query) {
   setAllProducts(copyAllProducts)
 }
-console.log(copyAllProducts)
 let filteredProductsData=copyAllProducts?.filter((item)=>(item.productName).includes(query))
 // if(filteredProductsData.length!==0)
 setAllProducts(filteredProductsData)

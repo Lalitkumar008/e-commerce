@@ -15,7 +15,7 @@ import Cart from './components/Cart'
 import Logout from './components/Logout'
 function App() {
   return (
-    <div className='w-100vw h-[100vh] bg-white '>
+    <div className='w-[calc(100vw)] h-[calc(100vh-64px)]  bg-white '>
       <Navbar />
       <ToastContainer />
       {/* <Home /> */}

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { getUserInfo } from "../api/auth";
 import { useFetcher, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const authContext = React.createContext();
 const AuthProvider = ({ children }) => {
   const [token,setToken]=useState()
   const [userId,setUserId]=useState()
   const [userData,setUserData]=useState()
-  
+  // const [isLoggedIn,setIsLoggedIn]=useState()
   useEffect(()=>{
       console.log(token,userId)
   },[userData])
@@ -17,10 +18,11 @@ const AuthProvider = ({ children }) => {
     const onFetchUserSuccess=(e)=>{
 console.log(e)
 setUserData(e.data.userInfo)
-
+toast()
   }
   const onFetchUserFailure=(e)=>{
     console.log(e)
+      const msg= e.response.data.msg
   }
 
 
