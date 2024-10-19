@@ -5,7 +5,7 @@ import ShowProducts from './ShowProducts'
 
 const Home = () => {
   return (
-    <div className=' h-[calc(100vh-64px)] '>
+    <div className=''>
 <HeroBanner />
 <ShowProducts />
     </div>

@@ -13,9 +13,10 @@ import Profile from './components/Profile'
 import SingleProduct from './components/SingleProduct'
 import Cart from './components/Cart'
 import Logout from './components/Logout'
+import Footer from './components/Footer'
 function App() {
   return (
-    <div className='w-[calc(100vw)] h-[calc(100vh-64px)]  bg-white '>
+    <div className='   bg-white '>
       <Navbar />
       <ToastContainer />
       {/* <Home /> */}
@@ -33,6 +34,7 @@ function App() {
         <Route path='*' element={<RouteError />} />
         
       </Routes>
+      <Footer />
     </div>
   )
 }

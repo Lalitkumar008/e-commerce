@@ -36,7 +36,8 @@ setName(userData?.fullName[0])
   },[])
 
   return (
- <div className="px-8 py-4 w-[1oovw] bg-black text-white flex items-center justify-between capitalize ">
+ <div className=' w-[100vw] pt-2 flex justify-center'>
+  <div className=" rounded-2xl px-8 py-4 w-[95%] bg-black text-white flex items-center justify-between capitalize ">
 <div className='flex  items-center w-1/2 justify-between '>
       <Link to='/' className="normal-case text-3xl px-6 font-bold">shopEx</Link>
      <input type='text' value={searchedProduct} onChange={(e)=>setSearchedProduct(e.target.value)} className='text-black px-3 text-xs h-7 outline-none rounded-md bg-gray-200 w-1/2 ' placeholder='search products'/>
@@ -65,6 +66,7 @@ setName(userData?.fullName[0])
 
     </div>
   </div>
+ </div>
   )
 }
 
