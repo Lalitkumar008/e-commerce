@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Banner from "../assets/banner.png"
 import {createClient} from "pexels"
-
+import heroBanner1 from "../assets/heroBanner1.jpeg"
+import heroBanner2 from "../assets/heroBanner2.jpeg"
+import heroBanner3 from "../assets/heroBanner3.jpeg"
 
 const HeroBanner = () => {
 const [img,setImg]=useState()
@@ -14,18 +16,13 @@ const [bgIndex,setBgIndex]=useState(0)
       setBgIndex(bgIndex+1)
     }, 3000);
     console.log(bgIndex)
- const fetchImage = async () => {
-      try {
-        const query = 'fashion';
-        const result = await client.photos.search({ query, per_page: 10 });
-        console.log(result); // Verify the API response
-
-        if (result?.photos?.[0]?.src?.original) {
-          setImg(result.photos[bgIndex].src.original); // Store the image URL
-        }
-      } catch (error) {
-        console.error('Error fetching image:', error);
-      }
+ const fetchImage =  () => {
+if(bgIndex===1)
+  setImg(heroBanner1)
+else if(bgIndex===2)
+  setImg(heroBanner2)
+else 
+  setImg(heroBanner3)
     };
 
     fetchImage();
@@ -48,6 +45,7 @@ const [bgIndex,setBgIndex]=useState(0)
    <div className='relative flex justify-center items-center h-[calc(100vh-64px)] bg-rd-400  w-[100vw]'>
        <p className='absolute  w-1/3     leading-snug capitalize text-white text-7xl font-semibold '>Grab upto 50% off on Selected products</p>
          <img className=' w-[95%] h-[90%]   rounded-md' src={img} alt="img" />
+         {/* <img src={heroBanner1} alt="" /> */}
    </div>
     </div>
   )
