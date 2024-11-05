@@ -1,6 +1,6 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3000";
-// const baseUrl = "https://e-com-backend-feal.onrender.com";
+// const baseUrl = "http://localhost:3000";
+const baseUrl = "https://e-com-backend-feal.onrender.com";
 export const loginUser = (onSuccess, onFailure, values) => {
   axios
     .post(`${baseUrl}/users/login`, { ...values })

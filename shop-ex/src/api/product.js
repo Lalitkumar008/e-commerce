@@ -3,8 +3,8 @@ import { useContext } from "react";
 import { authContext } from "../context/authContext";
 const userId = localStorage.getItem("userId");
 const token = localStorage.getItem("token");
-const baseUrl = "http://localhost:3000";
-// const baseUrl = "https://e-com-backend-feal.onrender.com";
+// const baseUrl = "http://localhost:3000";
+const baseUrl = "https://e-com-backend-feal.onrender.com";
 // add to cart product
 export const addToCartProduct = (onSuccess, onFailure, id) => {
   console.log(userId);
